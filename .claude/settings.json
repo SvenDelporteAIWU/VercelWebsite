@@ -3,7 +3,12 @@
     "allow": [
       "Bash(rm -rf .git)",
       "Bash(git remote *)",
-      "Bash(git commit *)"
+      "Bash(git commit *)",
+      "Bash(ssh -T git@github.com)",
+      "Bash(git push *)"
+    ],
+    "additionalDirectories": [
+      "/Users/svendelporte/.ssh"
     ]
   }
 }
