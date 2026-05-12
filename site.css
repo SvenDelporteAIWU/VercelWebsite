@@ -10,7 +10,6 @@ body {
   background-image:
     radial-gradient(ellipse at 20% 5%, rgba(77, 237, 237, 0.10), transparent 50%),
     radial-gradient(ellipse at 95% 30%, rgba(255, 59, 208, 0.10), transparent 50%);
-  min-width: 1280px;
 }
 a { color: inherit; text-decoration: none; }
 button { font-family: inherit; }
@@ -358,3 +357,90 @@ button { font-family: inherit; }
 }
 .trouble-card h4 { font-family: var(--font-arcade); font-size: 13px; letter-spacing: 0.16em; text-transform: uppercase; font-weight: 700; color: var(--neon-pink); margin: 0 0 8px; }
 .trouble-card p { font-family: var(--font-body); font-size: 14px; line-height: 1.6; color: var(--fg-2); margin: 0; }
+
+/* =========================================================================
+   RESPONSIVE
+   ========================================================================= */
+
+/* Tablet — collapse multi-column layouts, shrink type */
+@media (max-width: 960px) {
+  .container { padding: 0 32px; }
+
+  /* Nav: hide links, keep logo + CTA */
+  .nav-links { display: none; }
+
+  /* Hero */
+  .hero { min-height: auto; padding: 60px 0 80px; }
+  .hero-grid { grid-template-columns: 1fr; gap: 40px; }
+  .hero-visual { display: none; }
+  .hero h1 { font-size: 96px; }
+
+  /* Section typography */
+  .section-title { font-size: 56px; }
+
+  /* Feature cards: 2 columns */
+  .feat-grid { grid-template-columns: repeat(2, 1fr); }
+
+  /* How to play: single column */
+  .how-grid { grid-template-columns: 1fr; }
+
+  /* Stats: 2×2 */
+  .stats { grid-template-columns: repeat(2, 1fr); }
+
+  /* Gallery: vertical stack */
+  .gallery { flex-direction: column; align-items: center; gap: 20px; }
+  .shot { width: 240px; height: 500px; }
+  .shot.center { width: 260px; height: 540px; transform: none; }
+
+  /* CTA card */
+  .cta-card { grid-template-columns: 1fr; gap: 32px; padding: 48px 40px; }
+  .cta-card h2 { font-size: 48px; }
+
+  /* Footer: 2-column */
+  .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+
+  /* Doc layout: collapse TOC */
+  .doc { grid-template-columns: 1fr; }
+  .toc { display: none; }
+  .subpage-hero h1 { font-size: 64px; }
+}
+
+/* Mobile — single column everything, compact spacing */
+@media (max-width: 600px) {
+  .container { padding: 0 20px; }
+
+  /* Hero */
+  .hero { padding: 40px 0 60px; }
+  .hero h1 { font-size: 60px; }
+  .hero p { font-size: 17px; }
+  .hero-actions { flex-direction: column; align-items: flex-start; }
+  .hero-meta { gap: 16px; }
+
+  /* Sections */
+  .section { padding: 72px 0; }
+  .section-title { font-size: 42px; }
+
+  /* Marquee */
+  .marquee span { font-size: 38px; }
+  .marquee-track { gap: 40px; }
+
+  /* Feature cards: single column */
+  .feat-grid { grid-template-columns: 1fr; gap: 16px; }
+
+  /* Stats: 2 per row */
+  .stats { grid-template-columns: repeat(2, 1fr); }
+
+  /* CTA */
+  .cta-card { padding: 32px 20px; }
+  .cta-card h2 { font-size: 38px; }
+
+  /* Footer: single column */
+  .footer-grid { grid-template-columns: 1fr; gap: 28px; }
+  .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
+
+  /* Sub-pages */
+  .subpage-hero h1 { font-size: 48px; }
+  .doc-card { padding: 32px 20px; }
+  .trouble-grid { grid-template-columns: 1fr; }
+  .contact-card { flex-direction: column; align-items: flex-start; gap: 16px; }
+}
