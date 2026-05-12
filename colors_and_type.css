@@ -1,0 +1,307 @@
+/* =========================================================================
+   STELLAR STRIKE — Colors & Type
+   The cosmic arcade. Deep space + neon signage.
+   ========================================================================= */
+
+@import url("https://fonts.googleapis.com/css2?family=Saira:ital,wght@0,400;0,600;0,800;1,800;1,900&family=Orbitron:wght@500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap");
+
+:root {
+  /* -----------------------------------------------------------------------
+     PALETTE — Cosmic backdrop
+     The world is set in deep space. Nothing is pure black, everything has
+     a violet/indigo cast like a city sky.
+     ----------------------------------------------------------------------- */
+  --space-void:       #0B0820;   /* outermost / page bg */
+  --space-deep:       #14102E;   /* primary surface bg */
+  --space-mid:        #1B1740;   /* raised surface */
+  --space-card:       #221C50;   /* card fill */
+  --space-line:       #2E2769;   /* hairline / divider */
+  --space-elev:       #3A3180;   /* hover surface */
+
+  /* -----------------------------------------------------------------------
+     PALETTE — Neon signage
+     The arcade colors. Always used as glowing strokes/text on dark.
+     Never on light backgrounds — they go muddy.
+     ----------------------------------------------------------------------- */
+  --neon-cyan:        #4DEDED;   /* primary brand — STELLAR */
+  --neon-pink:        #FF3BD0;   /* primary brand — STRIKE */
+  --neon-magenta:     #FF4FA3;   /* hearts / lives */
+  --neon-yellow:      #FFD43B;   /* high score / stars */
+  --neon-orange:      #FF8A2A;   /* PLAY CTA */
+  --neon-violet:      #8B6CFF;   /* XP / progress */
+  --neon-lime:        #B6FF4D;   /* success / pickups */
+  --neon-red:         #FF4D6D;   /* danger / damage */
+
+  /* Glow halos (semi-transparent variants for box/text shadow) */
+  --glow-cyan:        rgba(77, 237, 237, 0.55);
+  --glow-pink:        rgba(255, 59, 208, 0.55);
+  --glow-yellow:      rgba(255, 212, 59, 0.55);
+  --glow-orange:      rgba(255, 138, 42, 0.55);
+  --glow-violet:      rgba(139, 108, 255, 0.55);
+
+  /* -----------------------------------------------------------------------
+     PALETTE — Foreground (text)
+     ----------------------------------------------------------------------- */
+  --fg-1:             #F4F1FF;   /* primary text — slight cool tint */
+  --fg-2:             #B8B0E0;   /* secondary text */
+  --fg-3:             #6E6796;   /* tertiary / hints */
+  --fg-4:             #3F3A6B;   /* disabled / watermarks */
+  --fg-on-neon:       #14102E;   /* text on filled neon button */
+
+  /* -----------------------------------------------------------------------
+     SEMANTIC — Surfaces / borders
+     ----------------------------------------------------------------------- */
+  --bg-page:          var(--space-void);
+  --bg-surface:       var(--space-deep);
+  --bg-card:          var(--space-card);
+  --bg-card-translucent: rgba(34, 28, 80, 0.55);
+  --bg-input:         rgba(11, 8, 32, 0.6);
+  --bg-hover:         var(--space-elev);
+
+  --border-soft:      rgba(184, 176, 224, 0.12);
+  --border-strong:    rgba(184, 176, 224, 0.25);
+
+  /* -----------------------------------------------------------------------
+     RADII — Generous, capsule-friendly
+     ----------------------------------------------------------------------- */
+  --r-1: 6px;
+  --r-2: 10px;
+  --r-3: 14px;
+  --r-4: 20px;
+  --r-5: 28px;
+  --r-pill: 999px;
+
+  /* -----------------------------------------------------------------------
+     SPACING — 4px base, doubles fast
+     ----------------------------------------------------------------------- */
+  --s-0: 2px;
+  --s-1: 4px;
+  --s-2: 8px;
+  --s-3: 12px;
+  --s-4: 16px;
+  --s-5: 24px;
+  --s-6: 32px;
+  --s-7: 48px;
+  --s-8: 64px;
+  --s-9: 96px;
+
+  /* -----------------------------------------------------------------------
+     ELEVATION — Glow-first, then drop shadow
+     The brand is neon, so "depth" usually means a colored halo, not a
+     gray drop shadow.
+     ----------------------------------------------------------------------- */
+  --shadow-card:     0 12px 32px -12px rgba(0, 0, 0, 0.6),
+                     0 2px 0 0 rgba(255, 255, 255, 0.04) inset;
+  --shadow-pop:      0 24px 48px -16px rgba(0, 0, 0, 0.7);
+
+  --glow-sm-cyan:    0 0 8px var(--glow-cyan);
+  --glow-md-cyan:    0 0 18px var(--glow-cyan), 0 0 4px rgba(77, 237, 237, 0.9);
+  --glow-lg-cyan:    0 0 32px var(--glow-cyan), 0 0 12px rgba(77, 237, 237, 0.8);
+  --glow-md-pink:    0 0 18px var(--glow-pink), 0 0 4px rgba(255, 59, 208, 0.9);
+  --glow-md-orange:  0 0 18px var(--glow-orange), 0 0 4px rgba(255, 138, 42, 0.9);
+  --glow-md-yellow:  0 0 18px var(--glow-yellow), 0 0 4px rgba(255, 212, 59, 0.9);
+  --glow-md-violet:  0 0 18px var(--glow-violet), 0 0 4px rgba(139, 108, 255, 0.9);
+
+  /* Ring style for "neon outlined capsule" — the dominant button look */
+  --ring-cyan:       inset 0 0 0 1.5px var(--neon-cyan), 0 0 12px var(--glow-cyan), 0 0 2px var(--neon-cyan);
+  --ring-pink:       inset 0 0 0 1.5px var(--neon-pink), 0 0 12px var(--glow-pink), 0 0 2px var(--neon-pink);
+  --ring-yellow:     inset 0 0 0 1.5px var(--neon-yellow), 0 0 12px var(--glow-yellow), 0 0 2px var(--neon-yellow);
+  --ring-violet:     inset 0 0 0 1.5px var(--neon-violet), 0 0 12px var(--glow-violet), 0 0 2px var(--neon-violet);
+
+  /* -----------------------------------------------------------------------
+     MOTION
+     Snappy, slightly bouncy. Arcade-feel, not enterprise-feel.
+     ----------------------------------------------------------------------- */
+  --ease-out:    cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ease-snap:   cubic-bezier(0.16, 1.2, 0.3, 1);   /* slight overshoot */
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-fast:    140ms;
+  --dur-base:    220ms;
+  --dur-slow:    420ms;
+
+  /* -----------------------------------------------------------------------
+     TYPOGRAPHY — Families
+     - Display: heavy italic (the wordmark look). Saira 900 italic ≈ closest
+       free match to the custom Stellar Strike wordmark.
+     - Wide-tracked tagline / labels: Orbitron (arcade/scifi geometric).
+     - Body / UI: Space Grotesk.
+     - Mono / numerals (XP, timers, scores): JetBrains Mono.
+     ----------------------------------------------------------------------- */
+  --font-display: "Saira", "Anton", system-ui, sans-serif;
+  --font-arcade:  "Orbitron", "Saira", system-ui, sans-serif;
+  --font-body:    "Space Grotesk", system-ui, -apple-system, sans-serif;
+  --font-mono:    "JetBrains Mono", "SF Mono", Menlo, monospace;
+
+  /* Sizes */
+  --text-xs:   12px;
+  --text-sm:   14px;
+  --text-base: 16px;
+  --text-md:   18px;
+  --text-lg:   22px;
+  --text-xl:   28px;
+  --text-2xl:  36px;
+  --text-3xl:  48px;
+  --text-4xl:  64px;
+  --text-5xl:  88px;
+}
+
+/* =========================================================================
+   SEMANTIC TYPE STYLES
+   Apply via class on the element.
+   ========================================================================= */
+
+.t-wordmark {
+  /* The "STELLAR STRIKE" lockup. Two lines, alternating cyan/pink, italic. */
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-style: italic;
+  font-size: var(--text-5xl);
+  line-height: 0.92;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  text-shadow: 0 0 24px currentColor, 0 0 6px currentColor;
+}
+
+.t-display {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-style: italic;
+  font-size: var(--text-3xl);
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: 0.005em;
+}
+
+.t-h1 {
+  font-family: var(--font-arcade);
+  font-weight: 700;
+  font-size: var(--text-2xl);
+  line-height: 1.1;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--fg-1);
+}
+
+.t-h2 {
+  font-family: var(--font-arcade);
+  font-weight: 700;
+  font-size: var(--text-xl);
+  line-height: 1.2;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--fg-1);
+}
+
+.t-h3 {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: var(--text-lg);
+  line-height: 1.3;
+  letter-spacing: 0;
+  color: var(--fg-1);
+}
+
+.t-tagline {
+  /* "THE COSMIC ARCADE" — wide-tracked caps */
+  font-family: var(--font-arcade);
+  font-weight: 500;
+  font-size: var(--text-sm);
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--fg-2);
+}
+
+.t-eyebrow {
+  font-family: var(--font-arcade);
+  font-weight: 600;
+  font-size: var(--text-xs);
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--fg-3);
+}
+
+.t-body {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: var(--text-base);
+  line-height: 1.55;
+  color: var(--fg-1);
+}
+
+.t-body-sm {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: var(--text-sm);
+  line-height: 1.55;
+  color: var(--fg-2);
+}
+
+.t-label {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: var(--text-sm);
+  letter-spacing: 0.02em;
+  color: var(--fg-2);
+}
+
+.t-button {
+  font-family: var(--font-arcade);
+  font-weight: 700;
+  font-size: var(--text-md);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.t-mono { font-family: var(--font-mono); font-feature-settings: "tnum" 1; }
+.t-mono-stat {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-feature-settings: "tnum" 1;
+  letter-spacing: 0.02em;
+  color: var(--fg-1);
+}
+
+.t-tip {
+  /* dim helper line at bottom of screens — "TIP: ..." */
+  font-family: var(--font-mono);
+  font-weight: 400;
+  font-size: var(--text-sm);
+  color: var(--fg-3);
+  letter-spacing: 0.02em;
+}
+
+/* =========================================================================
+   COLOR APPLICATION HELPERS
+   ========================================================================= */
+.c-cyan    { color: var(--neon-cyan); }
+.c-pink    { color: var(--neon-pink); }
+.c-magenta { color: var(--neon-magenta); }
+.c-yellow  { color: var(--neon-yellow); }
+.c-orange  { color: var(--neon-orange); }
+.c-violet  { color: var(--neon-violet); }
+.c-lime    { color: var(--neon-lime); }
+.c-fg1     { color: var(--fg-1); }
+.c-fg2     { color: var(--fg-2); }
+.c-fg3     { color: var(--fg-3); }
+
+.glow-cyan    { text-shadow: 0 0 12px var(--glow-cyan), 0 0 4px var(--neon-cyan); }
+.glow-pink    { text-shadow: 0 0 12px var(--glow-pink), 0 0 4px var(--neon-pink); }
+.glow-yellow  { text-shadow: 0 0 12px var(--glow-yellow), 0 0 4px var(--neon-yellow); }
+.glow-violet  { text-shadow: 0 0 12px var(--glow-violet), 0 0 4px var(--neon-violet); }
+
+/* =========================================================================
+   BACKDROPS
+   ========================================================================= */
+.bg-space {
+  background:
+    radial-gradient(ellipse at 50% 30%, rgba(77, 237, 237, 0.06), transparent 60%),
+    radial-gradient(ellipse at 80% 80%, rgba(255, 59, 208, 0.05), transparent 60%),
+    var(--space-void);
+}
+
+.bg-starfield {
+  /* Stars are PNG/SVG sprinkled on top of bg-space — see assets/starfield.svg */
+  background:
+    url("./assets/starfield.svg") center/cover no-repeat,
+    radial-gradient(ellipse at 50% 35%, #1B1740 0%, #0B0820 70%);
+}

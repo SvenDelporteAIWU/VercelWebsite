@@ -1,0 +1,374 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Stellar Strike — The Cosmic Arcade</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="site.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const { useEffect, useRef } = React;
+
+function Stars() {
+  const ref = useRef(null);
+  useEffect(() => {
+    const c = ref.current; if (!c) return;
+    const ctx = c.getContext("2d");
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const resize = () => {
+      const w = c.clientWidth, h = c.clientHeight;
+      c.width = w * dpr; c.height = h * dpr;
+      ctx.setTransform(1,0,0,1,0,0); ctx.scale(dpr, dpr);
+      return { w, h };
+    };
+    let { w, h } = resize();
+    const mkStars = () => Array.from({ length: Math.floor(w * h / 2400) }, () => ({
+      x: Math.random() * w, y: Math.random() * h,
+      r: 0.4 + Math.random() * 1.6, a: 0.2 + Math.random() * 0.8,
+      s: 0.5 + Math.random() * 1.5, warm: Math.random() < 0.1,
+      phase: Math.random() * Math.PI * 2,
+    }));
+    let stars = mkStars();
+    const onResize = () => { ({ w, h } = resize()); stars = mkStars(); };
+    window.addEventListener("resize", onResize);
+    let raf, t0 = performance.now();
+    const loop = (t) => {
+      const dt = (t - t0) / 1000; ctx.clearRect(0, 0, w, h);
+      stars.forEach(st => {
+        const k = 0.55 + 0.45 * Math.sin(dt * st.s + st.phase);
+        ctx.globalAlpha = st.a * k;
+        ctx.fillStyle = st.warm ? "#FFD43B" : "#FFFFFF";
+        ctx.beginPath(); ctx.arc(st.x, st.y, st.r, 0, Math.PI * 2); ctx.fill();
+      });
+      raf = requestAnimationFrame(loop);
+    };
+    raf = requestAnimationFrame(loop);
+    return () => { cancelAnimationFrame(raf); window.removeEventListener("resize", onResize); };
+  }, []);
+  return <canvas ref={ref} style={{ width: "100%", height: "100%", display: "block" }} />;
+}
+
+function Lockup({ size = 22 }) {
+  return (
+    <div className="lockup" style={{ fontSize: size }}>
+      <span className="a">Stellar</span>
+      <span className="b">Strike</span>
+    </div>
+  );
+}
+
+function AppleGlyph() {
+  // Apple logo SVG
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M17.05 12.04c-.03-2.83 2.31-4.19 2.42-4.25-1.32-1.93-3.38-2.2-4.11-2.23-1.75-.18-3.42 1.03-4.31 1.03-.9 0-2.27-1-3.73-.97-1.92.03-3.69 1.12-4.68 2.83-2 3.46-.51 8.58 1.43 11.4.95 1.39 2.07 2.93 3.54 2.88 1.42-.06 1.96-.92 3.68-.92 1.71 0 2.2.92 3.7.89 1.53-.03 2.5-1.4 3.43-2.79 1.08-1.6 1.52-3.16 1.55-3.24-.03-.01-2.97-1.14-3-4.53zM14.4 4.07c.79-.95 1.32-2.27 1.18-3.58-1.13.05-2.51.76-3.32 1.71-.73.84-1.37 2.18-1.2 3.47 1.27.1 2.55-.64 3.34-1.6z"/>
+    </svg>
+  );
+}
+
+function AppStoreBadge() {
+  return (
+    <a className="app-store-badge" href="#" onClick={(e)=>e.preventDefault()}>
+      <AppleGlyph />
+      <div className="col">
+        <span className="small">Download on the</span>
+        <span className="big">App Store</span>
+      </div>
+    </a>
+  );
+}
+
+function Nav() {
+  return (
+    <nav className="nav">
+      <div className="container nav-inner">
+        <Lockup />
+        <div className="nav-links">
+          <a href="#features">Features</a>
+          <a href="#how">How to play</a>
+          <a href="#gallery">Gallery</a>
+          <a href="support.html">Support</a>
+          <a href="privacy.html">Privacy</a>
+        </div>
+        <div className="grow" />
+        <button className="btn-primary" onClick={() => document.getElementById('download').scrollIntoView({behavior:'smooth', block:'center'})}>
+          🚀 Get the app
+        </button>
+      </div>
+    </nav>
+  );
+}
+
+function HeroSolar() {
+  const planets = [
+    { r: 70,  d: 14, color: "#9CA0FF", speed: 8,  start: 30 },
+    { r: 105, d: 18, color: "#FFA6E1", speed: 12, start: 200 },
+    { r: 140, d: 26, color: "#FFB16E", speed: 18, start: 120 },
+    { r: 175, d: 16, color: "#FF4D6D", speed: 24, start: 250 },
+    { r: 210, d: 28, color: "#3FB6FF", speed: 30, start: 80 },
+    { r: 245, d: 20, color: "#4DEDED", speed: 38, start: 320 },
+  ];
+  return (
+    <div style={{ position: "relative", width: 520, height: 520 }}>
+      {planets.map((p, i) => (
+        <div key={i} className="spin" style={{
+          position: "absolute", left: "50%", top: "50%",
+          width: p.r * 2, height: p.r * 2,
+          transform: `translate(-50%, -50%) rotate(${p.start}deg)`,
+          borderRadius: 999,
+          border: "1px solid rgba(184,176,224, 0.10)",
+          animationDuration: `${p.speed}s`,
+        }}>
+          <div style={{
+            position: "absolute", left: "50%", top: 0,
+            transform: "translate(-50%, -50%)",
+            width: p.d, height: p.d, borderRadius: 999,
+            background: p.color,
+            boxShadow: `0 0 ${p.d}px ${p.color}, 0 0 6px ${p.color}`,
+          }} />
+        </div>
+      ))}
+      <div style={{
+        position: "absolute", left: "50%", top: "50%",
+        transform: "translate(-50%, -50%)",
+        width: 36, height: 36, borderRadius: 999,
+        background: "var(--neon-orange)",
+        boxShadow: "0 0 48px var(--glow-orange), 0 0 12px var(--neon-orange)",
+      }} />
+    </div>
+  );
+}
+
+function Hero() {
+  return (
+    <section className="hero">
+      <div className="hero-stars"><Stars /></div>
+      <div className="container hero-grid">
+        <div>
+          <h1>
+            <span className="a">Stellar</span>
+            <span className="b">Strike</span>
+          </h1>
+          <div className="tag">The Cosmic Arcade</div>
+          <p>Tap to strike. Chain hits across planets to stack combos and survive deeper, faster, brighter waves of orbital chaos — one solar system at a time.</p>
+          <div className="hero-actions">
+            <AppStoreBadge />
+            <a className="btn-ring" href="#how">How to play</a>
+          </div>
+          <div className="hero-meta">
+            <span>★ <b>Endless mode</b></span>
+            <span><b>Power-ups</b> &amp; twists</span>
+            <span><b>Free</b> on iOS</span>
+          </div>
+        </div>
+        <div className="hero-visual"><HeroSolar /></div>
+      </div>
+    </section>
+  );
+}
+
+function Marquee() {
+  const items = ["Stellar Strike", "The Cosmic Arcade", "Stellar Strike", "The Cosmic Arcade"];
+  const styles = ["", "alt", "fill", "alt"];
+  const all = [...items, ...items];
+  const cls  = [...styles, ...styles];
+  return (
+    <div className="marquee">
+      <div className="marquee-track">
+        {all.map((t, i) => <span key={i} className={cls[i]}>{t} ✦</span>)}
+      </div>
+    </div>
+  );
+}
+
+const FEATURES = [
+  { color: "cyan",   glyph: "💥", title: "Strike & combo",  copy: "Tap planets as they enter the strike zone to score. Chain hits back-to-back to stack a combo multiplier — and watch out for meteorites." },
+  { color: "pink",   glyph: "❄️", title: "Cosmic twists",   copy: "Solar Freeze locks the orbits for a few seconds. Direction Flip reverses every planet on screen. Adapt or miss." },
+  { color: "yellow", glyph: "🛡️", title: "Power-ups",       copy: "Grab a Shield to absorb one hit, or 2× Score to double every point for ten seconds. Time them right and your run pops off." },
+];
+
+function Features() {
+  return (
+    <section className="section" id="features">
+      <div className="container">
+        <div className="section-eyebrow">What's inside</div>
+        <h2 className="section-title">An arcade you can fit in one hand.</h2>
+        <p className="section-sub">Pure tap-to-strike. No menus to memorize, no in-app store between you and the next combo. Built for one thumb, polished for all of them.</p>
+        <div className="feat-grid">
+          {FEATURES.map(f => (
+            <div className="feat-card" data-color={f.color} key={f.title}>
+              <div className="glyph">{f.glyph}</div>
+              <h3>{f.title}</h3>
+              <p>{f.copy}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+const STEPS = [
+  { num: "STEP 01", title: "Tap",    copy: "Tap any planet as it enters the strike zone. Every hit scores. Miss a meteorite — don't tap it, or you lose a life." },
+  { num: "STEP 02", title: "Combo",  copy: "Chain strikes back-to-back to build a multiplier. Grab Shield and 2× Score power-ups when they drift past." },
+  { num: "STEP 03", title: "Survive",copy: "The longer you last, the faster it gets. Use Solar Freeze and Direction Flip moments to push your high score." },
+];
+
+function HowToPlay() {
+  return (
+    <section className="section" id="how" style={{ paddingTop: 60 }}>
+      <div className="container">
+        <div className="section-eyebrow">How to play</div>
+        <h2 className="section-title">One tap. Infinite cosmos.</h2>
+        <p className="section-sub">Stellar Strike strips the arcade down to its purest loop. Pick it up in seconds, get good in a week, get great never.</p>
+        <div className="how-grid">
+          {STEPS.map(s => (
+            <div className="how-step" key={s.title}>
+              <div className="num">{s.num}</div>
+              <h3>{s.title}</h3>
+              <p>{s.copy}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Gallery() {
+  return (
+    <section className="section" id="gallery" style={{ paddingTop: 60 }}>
+      <div className="container">
+        <div className="section-eyebrow">Gameplay</div>
+        <h2 className="section-title">A solar system in your pocket.</h2>
+        <p className="section-sub">Six neon planets, one yellow sun, and you in the middle of it.</p>
+        <div className="gallery">
+          <div className="shot left"><img src="assets/screen-home.png" alt="Stellar Strike home screen" /></div>
+          <div className="shot center"><img src="assets/screen-gameplay.png" alt="Stellar Strike gameplay" /></div>
+          <div className="shot right"><img src="assets/screen-purple.png" alt="Stellar Strike gameplay — Ensign rank" /></div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+const STATS = [
+  { c: "cyan",   num: "1",     lab: "Tap to play" },
+  { c: "pink",   num: "2×",    lab: "Score multiplier" },
+  { c: "yellow", num: "5",     lab: "Lives per run" },
+  { c: "violet", num: "∞",     lab: "Endless waves" },
+];
+
+function Stats() {
+  return (
+    <section className="section" style={{ paddingTop: 60, paddingBottom: 80 }}>
+      <div className="container">
+        <div className="section-eyebrow">By the numbers</div>
+        <h2 className="section-title" style={{ maxWidth: 700 }}>The cosmos is busy.</h2>
+        <div className="stats">
+          {STATS.map(s => (
+            <div className="stat" data-c={s.c} key={s.lab}>
+              <div className="num">{s.num}</div>
+              <div className="lab">{s.lab}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function CTA() {
+  return (
+    <section className="section" id="download" style={{ paddingTop: 60 }}>
+      <div className="container">
+        <div className="cta-card">
+          <div>
+            <h2>Boot up. <br/><span className="c-orange">Drop in.</span></h2>
+            <p>Stellar Strike is free on iOS. Tap the screen, strike the planets, see how long you last.</p>
+          </div>
+          <div style={{ display: "flex", flexDirection: "column", gap: 16, alignItems: "flex-start" }}>
+            <AppStoreBadge />
+            <span style={{ fontFamily: "var(--font-mono)", fontSize: 12, color: "var(--fg-3)", letterSpacing: "0.04em" }}>
+              Requires iOS 15.0 or later · iPhone & iPad
+            </span>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Footer() {
+  return (
+    <footer className="footer">
+      <div className="container">
+        <div className="footer-grid">
+          <div>
+            <Lockup size={28} />
+            <p style={{ fontFamily: "var(--font-body)", color: "var(--fg-2)", fontSize: 14, marginTop: 16, lineHeight: 1.6, maxWidth: 360 }}>
+              The cosmic arcade. Built for thumbs, played in transit, perfected in bed.
+            </p>
+            <p style={{ fontFamily: "var(--font-mono)", color: "var(--fg-3)", fontSize: 12, marginTop: 16 }}>
+              By Sven Delporte
+            </p>
+          </div>
+          <div>
+            <h4>Game</h4>
+            <ul>
+              <li><a href="#features">Features</a></li>
+              <li><a href="#how">How to play</a></li>
+              <li><a href="#gallery">Gallery</a></li>
+              <li><a href="#download">Download</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4>Help</h4>
+            <ul>
+              <li><a href="support.html">Support</a></li>
+              <li><a href="mailto:Delporte.stef@gmail.com">Contact</a></li>
+              <li><a href="support.html#troubleshoot">Troubleshooting</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4>Legal</h4>
+            <ul>
+              <li><a href="privacy.html">Privacy Policy</a></li>
+              <li><a href="mailto:delporte.stef@gmail.com">Privacy contact</a></li>
+            </ul>
+          </div>
+        </div>
+        <div className="footer-bottom">
+          <span>© 2026 Stellar Strike. All systems online.</span>
+          <span>v1.0 · Built among the stars</span>
+        </div>
+      </div>
+    </footer>
+  );
+}
+
+function App() {
+  return (
+    <>
+      <Nav />
+      <Hero />
+      <Marquee />
+      <Features />
+      <HowToPlay />
+      <Gallery />
+      <Stats />
+      <CTA />
+      <Footer />
+    </>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+</script>
+</body>
+</html>

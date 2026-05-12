@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Support — Stellar Strike</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="site.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+</head>
+<body>
+<nav class="nav">
+  <div class="container nav-inner">
+    <a href="index.html" class="lockup" style="font-size:22px;">
+      <span class="a">Stellar</span><span class="b">Strike</span>
+    </a>
+    <div class="nav-links">
+      <a href="index.html#features">Features</a>
+      <a href="index.html#how">How to play</a>
+      <a href="index.html#gallery">Gallery</a>
+      <a href="support.html" class="active">Support</a>
+      <a href="privacy.html">Privacy</a>
+    </div>
+    <div class="grow"></div>
+    <a class="btn-primary" href="index.html#download">🚀 Get the app</a>
+  </div>
+</nav>
+
+<header class="subpage-hero">
+  <div class="stars" id="stars"></div>
+  <div class="container">
+    <div class="crumb">Help · Stellar Strike</div>
+    <h1 class="pink">Support</h1>
+    <div class="meta">Having trouble with Stellar Strike? <b>We're here to help.</b></div>
+  </div>
+</header>
+
+<main class="container">
+  <div class="doc">
+    <aside class="toc">
+      <div class="toc-label">On this page</div>
+      <ul>
+        <li><a href="#troubleshoot">Common issues</a></li>
+        <li><a href="#contact">Contact us</a></li>
+      </ul>
+    </aside>
+
+    <article class="doc-card pink">
+      <h2 id="troubleshoot">Common issues</h2>
+      <p class="lead">Most problems clear up with a quick check. Try these first — if you're still stuck, drop us a line.</p>
+
+      <div class="trouble-grid">
+        <div class="trouble-card">
+          <div class="glyph">📡</div>
+          <h4>Ads not loading</h4>
+          <p>Ensure you have an internet connection. Ads may take a moment to load.</p>
+        </div>
+        <div class="trouble-card">
+          <div class="glyph">💾</div>
+          <h4>Progress lost</h4>
+          <p>Game data is stored locally on your device. Deleting the app will remove all progress.</p>
+        </div>
+        <div class="trouble-card">
+          <div class="glyph">⚠️</div>
+          <h4>App crashing</h4>
+          <p>Make sure you're running the latest version of iOS and the latest version of Stellar Strike.</p>
+        </div>
+      </div>
+
+      <hr/>
+
+      <h2 id="contact">Contact us</h2>
+      <p>For any questions, bug reports, or feedback, email us. We typically respond within <b>48 hours</b>.</p>
+
+      <div class="contact-card">
+        <div>
+          <div class="lab">Support email</div>
+          <div class="val"><a href="mailto:Delporte.stef@gmail.com">Delporte.stef@gmail.com</a></div>
+        </div>
+        <a class="btn-ring" style="color:var(--neon-pink); box-shadow: var(--ring-pink);" href="mailto:Delporte.stef@gmail.com">Send email</a>
+      </div>
+    </article>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <a href="index.html" class="lockup" style="font-size:28px;"><span class="a">Stellar</span><span class="b">Strike</span></a>
+        <p style="font-family:var(--font-body); color:var(--fg-2); font-size:14px; margin-top:16px; line-height:1.6; max-width:360px;">The cosmic arcade. Built for thumbs, played in transit, perfected in bed.</p>
+        <p style="font-family:var(--font-mono); color:var(--fg-3); font-size:12px; margin-top:16px;">By Sven Delporte</p>
+      </div>
+      <div><h4>Game</h4><ul>
+        <li><a href="index.html#features">Features</a></li>
+        <li><a href="index.html#how">How to play</a></li>
+        <li><a href="index.html#gallery">Gallery</a></li>
+        <li><a href="index.html#download">Download</a></li>
+      </ul></div>
+      <div><h4>Help</h4><ul>
+        <li><a href="support.html">Support</a></li>
+        <li><a href="mailto:Delporte.stef@gmail.com">Contact</a></li>
+        <li><a href="support.html#troubleshoot">Troubleshooting</a></li>
+      </ul></div>
+      <div><h4>Legal</h4><ul>
+        <li><a href="privacy.html">Privacy Policy</a></li>
+        <li><a href="mailto:delporte.stef@gmail.com">Privacy contact</a></li>
+      </ul></div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Stellar Strike. All systems online.</span>
+      <span>v1.0 · Built among the stars</span>
+    </div>
+  </div>
+</footer>
+
+<script type="text/babel">
+const { useEffect, useRef } = React;
+function Stars() {
+  const ref = useRef(null);
+  useEffect(() => {
+    const c = ref.current; if (!c) return;
+    const ctx = c.getContext("2d");
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const w = c.clientWidth, h = c.clientHeight;
+    c.width = w * dpr; c.height = h * dpr; ctx.scale(dpr, dpr);
+    const stars = Array.from({ length: Math.floor(w * h / 2400) }, () => ({
+      x: Math.random() * w, y: Math.random() * h,
+      r: 0.4 + Math.random() * 1.5, a: 0.2 + Math.random() * 0.8,
+      s: 0.5 + Math.random() * 1.5, warm: Math.random() < 0.1,
+      phase: Math.random() * Math.PI * 2,
+    }));
+    let raf, t0 = performance.now();
+    const loop = (t) => {
+      const dt = (t - t0) / 1000; ctx.clearRect(0, 0, w, h);
+      stars.forEach(st => {
+        const k = 0.55 + 0.45 * Math.sin(dt * st.s + st.phase);
+        ctx.globalAlpha = st.a * k;
+        ctx.fillStyle = st.warm ? "#FFD43B" : "#FFFFFF";
+        ctx.beginPath(); ctx.arc(st.x, st.y, st.r, 0, Math.PI * 2); ctx.fill();
+      });
+      raf = requestAnimationFrame(loop);
+    };
+    raf = requestAnimationFrame(loop);
+    return () => cancelAnimationFrame(raf);
+  }, []);
+  return <canvas ref={ref} style={{ width: "100%", height: "100%", display: "block" }} />;
+}
+ReactDOM.createRoot(document.getElementById("stars")).render(<Stars />);
+</script>
+</body>
+</html>
